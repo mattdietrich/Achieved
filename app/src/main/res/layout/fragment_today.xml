@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -7,48 +8,100 @@
     tools:context=".MainActivity$PlaceholderFragment">
 
     <include layout="@layout/card_view_achievement"
-        android:id="@+id/include" />
+        android:id="@+id/include"/>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:rowCount="2"
+        android:layout_below="@id/include"
+        android:useDefaultMargins="true">
+
+        <TextView
+            android:id="@+id/txt_reminder_label"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:text="Reminder:"/>
+
+        <TextView
+            android:id="@+id/txt_reminder"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="12:00 AM"/>
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switch_reminder"
+            android:layout_gravity="center_vertical"
+            android:textOn="ON"
+            android:textOff="OFF" />
+
+        <TextView
+            android:id="@+id/txt_status_label"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:text="Status:"/>
+
+        <TextView
+            android:id="@+id/txt_status"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Achieved!"/>
+
+    </GridLayout>
 
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
+        android:layout_alignParentBottom="true">
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="ACHIEVE"
-            android:id="@+id/button3"
-            android:padding="@dimen/activity_horizontal_margin"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
 
-        <LinearLayout
-            android:id="@+id/buttons"
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/btn_more_options"
+            android:layout_width="@dimen/fab_button_diameter"
+            android:layout_height="@dimen/fab_button_diameter"
+            android:background="@null"
+            android:src="@drawable/ic_action_overflow_light"
+            android:scaleType="centerCrop"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="EDIT"
-                android:id="@+id/btnEdit"
-                android:layout_gravity="bottom"
-                android:layout_weight="1"
-                android:padding="@dimen/activity_horizontal_margin"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SHARE"
-                android:id="@+id/btnShare"
-                android:layout_gravity="bottom"
-                android:layout_weight="1"
-                android:padding="@dimen/activity_horizontal_margin"/>
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/btn_achieve_it"
+            android:layout_width="@dimen/fab_button_diameter"
+            android:layout_height="@dimen/fab_button_diameter"
+            android:background="@drawable/fab_shape"
+            android:src="@drawable/ic_action_achieve"
+            android:scaleType="centerCrop"/>
 
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+
+        <ImageButton
+            android:id="@+id/btn_new_goal"
+            android:layout_width="@dimen/fab_button_diameter"
+            android:layout_height="@dimen/fab_button_diameter"
+            android:background="@null"
+            android:src="@drawable/ic_action_new_light"
+            android:scaleType="centerCrop"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
 
     </LinearLayout>
 
