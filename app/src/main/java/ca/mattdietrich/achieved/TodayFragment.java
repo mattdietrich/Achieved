@@ -1,12 +1,16 @@
 package ca.mattdietrich.achieved;
 
 import android.app.Activity;
+import android.app.TimePickerDialog;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -21,6 +25,14 @@ import android.widget.TextView;
 public class TodayFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+
+    private TextView txtReminderTime;
+    private TimePickerDialog.OnTimeSetListener mTimeSetListener;
+
+    private LinearLayout defaultButtonRow;
+    private LinearLayout editButtonRow;
+    private ImageButton editButton;
+    private ImageButton cancelEditButton;
 
     /**
      * Use this factory method to create a new instance of
@@ -51,6 +63,41 @@ public class TodayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_today, container, false);
+
+        txtReminderTime = (TextView) rootView.findViewById(R.id.txt_reminder);
+        txtReminderTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v);
+            }
+        });
+
+        defaultButtonRow = (LinearLayout) rootView.findViewById(R.id.default_buttons);
+        editButtonRow = (LinearLayout) rootView.findViewById(R.id.edit_buttons);
+        editButton = (ImageButton) rootView.findViewById(R.id.btn_edit);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToEditMode();
+            }
+        });
+
+        cancelEditButton = (ImageButton) rootView.findViewById(R.id.btn_cancel_edit);
+        cancelEditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToDefaultMode();
+            }
+        });
+
+        mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(android.widget.TimePicker view,
+                                  int hourOfDay, int minute) {
+                updateReminderTime(hourOfDay, minute);
+            }
+        };
+
         return rootView;
     }
 
@@ -94,5 +141,42 @@ public class TodayFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
+    public void switchToEditMode() {
+        if(defaultButtonRow != null)
+            defaultButtonRow.setVisibility(View.GONE);
+        if(editButtonRow != null)
+            editButtonRow.setVisibility(View.VISIBLE);
+    }
+
+    public void switchToDefaultMode() {
+        if(editButtonRow != null)
+            editButtonRow.setVisibility(View.GONE);
+        if(defaultButtonRow != null)
+            defaultButtonRow.setVisibility(View.VISIBLE);
+    }
+
+    public void showTimePickerDialog(View v) {
+        TimePickerFragment newFragment = new TimePickerFragment();
+        newFragment.setOnTimeSetListener(mTimeSetListener);
+        newFragment.show(getActivity().getSupportFragmentManager(), "timePicker");
+    }
+
+    public void updateReminderTime(int hourOfDay, int minute) {
+        // Convert 24-hour time to 12-hour time
+        String suffix;
+        if(hourOfDay < 12)
+            suffix = "AM";
+        else {
+            suffix = "PM";
+            hourOfDay = hourOfDay % 12;
+        }
+        if (hourOfDay == 0)
+            hourOfDay = 12;
+
+        txtReminderTime.setText(Integer.toString(hourOfDay)+":"+String.format("%02d",minute)+ " " + suffix);
+    }
+
+
 
 }

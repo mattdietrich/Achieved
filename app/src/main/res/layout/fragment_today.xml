@@ -50,6 +50,7 @@
 
 
     <LinearLayout
+        android:id="@+id/default_buttons"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -62,11 +63,11 @@
         </Space>
 
         <ImageButton
-            android:id="@+id/btn_more_options"
+            android:id="@+id/btn_edit"
             android:layout_width="@dimen/fab_button_diameter"
             android:layout_height="@dimen/fab_button_diameter"
             android:background="@null"
-            android:src="@drawable/ic_action_overflow_light"
+            android:src="@drawable/ic_action_edit"
             android:scaleType="centerCrop"/>
 
         <Space
@@ -95,6 +96,50 @@
             android:layout_height="@dimen/fab_button_diameter"
             android:background="@null"
             android:src="@drawable/ic_action_new_light"
+            android:scaleType="centerCrop"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/edit_buttons"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+
+        <ImageButton
+            android:id="@+id/btn_cancel_edit"
+            android:layout_width="@dimen/fab_button_diameter"
+            android:layout_height="@dimen/fab_button_diameter"
+            android:background="@null"
+            android:src="@drawable/ic_action_cancel"
+            android:scaleType="centerCrop"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+
+        <ImageButton
+            android:id="@+id/btn_confirm_edit"
+            android:layout_width="@dimen/fab_button_diameter"
+            android:layout_height="@dimen/fab_button_diameter"
+            android:background="@null"
+            android:src="@drawable/ic_action_confirm"
             android:scaleType="centerCrop"/>
 
         <Space
