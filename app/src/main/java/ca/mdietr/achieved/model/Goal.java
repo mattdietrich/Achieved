@@ -1,9 +1,10 @@
-package ca.mattdietrich.achieved.model;
+package ca.mdietr.achieved.model;
 
 import java.util.Date;
 
 /**
  * Created by Matt on 2015-09-01.
+ * Model class for a goal
  */
 public class Goal {
     private long id;

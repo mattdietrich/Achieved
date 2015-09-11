@@ -1,4 +1,4 @@
-package ca.mattdietrich.achieved;
+package ca.mdietr.achieved;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;

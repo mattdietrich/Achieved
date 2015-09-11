@@ -1,4 +1,4 @@
-package ca.mattdietrich.achieved.database;
+package ca.mdietr.achieved.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,10 +7,11 @@ import android.util.Log;
 
 /**
  * Created by Matt on 2015-09-01.
+ * Responsible for creating and updating the database
  */
 public class GoalSQLiteOpenHelper extends SQLiteOpenHelper{
 
-    private static final String DATABASE_NAME = "goals.db"
+    private static final String DATABASE_NAME = "goals.db";
     private static final int DATABASE_VERSION = 1;
 
     // Goal Table

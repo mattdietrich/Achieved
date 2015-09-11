@@ -1,4 +1,4 @@
-package ca.mattdietrich.achieved;
+package ca.mdietr.achieved;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AchievementsFragment.OnFragmentInteractionListener} interface
+ * {@link SettingsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AchievementsFragment#newInstance} factory method to
+ * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AchievementsFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
@@ -25,32 +25,31 @@ public class AchievementsFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment AchievementsFragment.
+     * @return A new instance of fragment SettingsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AchievementsFragment newInstance(int navDrawerSectionNumber) {
-        AchievementsFragment fragment = new AchievementsFragment();
+    public static SettingsFragment newInstance(int navDrawerSectionNumber) {
+        SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
         args.putInt (MainActivity.ARG_NAV_DRAWER_SECTION_NUMBER, navDrawerSectionNumber);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public AchievementsFragment() {
+    public SettingsFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_achievements, container, false);
+        return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
