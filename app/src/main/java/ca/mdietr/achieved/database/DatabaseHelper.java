@@ -11,8 +11,18 @@ import android.util.Log;
  */
 public class DatabaseHelper extends SQLiteOpenHelper{
 
-    DatabaseHelper(Context context) {
+    private static DatabaseHelper mInstance;
+
+    // Prevent direct instantiation
+    private DatabaseHelper(Context context) {
         super(context, DatabaseContract.DATABASE_NAME, null, DatabaseContract.DATABASE_VERSION);
+    }
+
+    public static DatabaseHelper getInstance(Context context) {
+        if (mInstance == null)
+            mInstance = new DatabaseHelper(context.getApplicationContext());
+
+        return mInstance;
     }
 
     // Method is called during creation of the database

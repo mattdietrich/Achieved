@@ -1,0 +1,113 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="ca.mdietr.achieved.NewGoalActivity">
+
+    <EditText
+        android:id="@+id/txt_new_goal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
+        android:hint="@string/new_goal_text_hint" />
+
+    <GridLayout
+        android:id="@+id/grid_new_goal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="4"
+        android:layout_below="@id/txt_new_goal"
+        android:useDefaultMargins="true">
+
+        <TextView
+            android:id="@+id/txt_new_goal_reminder_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:text="Remind Me:"/>
+
+        <TextView
+            android:id="@+id/txt_new_goal_reminder"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="12:00 AM"/>
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switch_new_goal_reminder"
+            android:layout_gravity="center_vertical"
+            android:textOn="ON"
+            android:textOff="OFF" />
+
+        <TextView
+            android:id="@+id/txt_new_goal_reward_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:text="Reward Me:"/>
+
+        <EditText
+            android:id="@+id/txt_new_goal_reward"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:hint="eg. Ice cream, Steak dinner, ..."/>
+
+    </GridLayout>
+
+    <LinearLayout
+        android:id="@+id/new_goal_buttons"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+
+        <ImageButton
+            android:id="@+id/btn_cancel_new_goal"
+            android:layout_width="@dimen/fab_button_diameter"
+            android:layout_height="@dimen/fab_button_diameter"
+            android:background="@null"
+            android:src="@drawable/ic_action_cancel"
+            android:scaleType="centerCrop"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+
+        <ImageButton
+            android:id="@+id/btn_confirm_new_goal"
+            android:layout_width="@dimen/fab_button_diameter"
+            android:layout_height="@dimen/fab_button_diameter"
+            android:background="@null"
+            android:src="@drawable/ic_action_confirm"
+            android:scaleType="centerCrop"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+
+    </LinearLayout>
+
+</RelativeLayout>
+

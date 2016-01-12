@@ -10,7 +10,8 @@ public class Goal {
     private long id;
     private String text;
     private Date date;
-    private boolean achieved;
+    private String reward;
+    private boolean isAchieved;
 
     public long getId() {
         return id;
@@ -36,11 +37,19 @@ public class Goal {
         this.date = date;
     }
 
+    public String getReward() {
+        return reward;
+    }
+
+    public void setReward(String reward) {
+        this.reward = reward;
+    }
+
     public boolean isAchieved() {
-        return achieved;
+        return isAchieved;
     }
 
     public void setAchieved(boolean achieved) {
-        this.achieved = achieved;
+        this.isAchieved = achieved;
     }
 }
