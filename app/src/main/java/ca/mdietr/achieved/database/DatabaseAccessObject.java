@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.Formatter;
 
 import ca.mdietr.achieved.model.Goal;
+import ca.mdietr.achieved.model.Reminder;
 
 /**
  * Created by Matt on 2015-09-01.
@@ -137,6 +138,38 @@ public class DatabaseAccessObject {
         return updateId;
     }
 
+    /**
+     * Inserts a new reminder with the specified date/time, enabled status, and goal Id into the database.
+     * Returns a new Reminder object.
+     */
+    public Reminder createReminder (Date date, boolean isEnabled, long goalId) {
+        if (database == null || !database.isOpen())
+            open();
+        if (database == null || !database.isOpen()){
+            // TODO - Error Opening Database
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_DATETIME, dateToString(date));
+        values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_ENABLED, isEnabled);
+        values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_GOAL_ID, goalId);
+
+        long insertId = database.insert(DatabaseContract.ReminderSchema.TABLE_NAME, null, values);
+        Cursor cursor = database.query(DatabaseContract.ReminderSchema.TABLE_NAME,
+                DatabaseContract.ReminderSchema.ALL_COLUMNS,
+                DatabaseContract.ReminderSchema.COLUMN_NAME_ID + " = " + insertId,
+                null, null, null, null);
+        cursor.moveToFirst();
+
+        Reminder newReminder = cursorToReminder(cursor);
+        cursor.close();
+        return newReminder;
+    }
+
+    /**
+     * Below are some helper functions (data type conversions)
+     */
+
     private Goal cursorToGoal(Cursor cursor) {
         if (cursor.getCount() < 1)
             return null;
@@ -147,6 +180,17 @@ public class DatabaseAccessObject {
         goal.setReward(cursor.getString(3));
         goal.setAchieved(intToBool(cursor.getInt(4)));
         return goal;
+    }
+
+    private Reminder cursorToReminder(Cursor cursor) {
+        if (cursor.getCount() < 1)
+            return null;
+        Reminder reminder = new Reminder();
+        reminder.setId(cursor.getLong(0));
+        reminder.setDateTime(stringToDate(cursor.getString(1)));
+        reminder.setEnabled(intToBool(cursor.getInt(2)));
+        reminder.setGoalId(cursor.getLong(3));
+        return reminder;
     }
 
     private String dateToString(Date date) {
