@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -20,6 +20,8 @@
             android:textSize="30sp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
+            android:enabled="false"
+            android:textColor="#000"
             android:text="Finish making my app"/>
 
         </LinearLayout>
