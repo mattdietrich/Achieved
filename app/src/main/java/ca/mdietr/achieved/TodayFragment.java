@@ -1,6 +1,7 @@
 package ca.mdietr.achieved;
 
 import android.app.Activity;
+import android.app.IntentService;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +28,7 @@ import java.util.Date;
 import ca.mdietr.achieved.database.DatabaseAccessObject;
 import ca.mdietr.achieved.model.Goal;
 import ca.mdietr.achieved.model.Reminder;
+import ca.mdietr.achieved.notification.NotificationIntentService;
 
 
 /**
@@ -235,6 +237,10 @@ public class TodayFragment extends Fragment {
     }
 
     public void achieveGoal() {
+        // TODO - Remove these lines, just used for testing the notifications
+        Intent serviceIntent = NotificationIntentService.createIntentReminderNotification(getActivity().getApplicationContext());
+        getActivity().startService(serviceIntent);
+
         if (todaysGoal == null || todaysGoal.isAchieved())
             return;
 
@@ -265,8 +271,6 @@ public class TodayFragment extends Fragment {
                 });
         AlertDialog alert = builder.create();
         alert.show();
-
-        return;
     }
 
     public void switchToEditMode() {

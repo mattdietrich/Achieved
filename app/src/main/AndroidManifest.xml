@@ -27,6 +27,9 @@
             android:name="android.support.PARENT_ACTIVITY"
             android:value="ca.mdietr.achieved.MainActivity" />
         </activity>
+        <service
+            android:name=".notification.NotificationIntentService"
+            android:exported="false" />
     </application>
 
 </manifest>
