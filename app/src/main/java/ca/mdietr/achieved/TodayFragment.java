@@ -1,14 +1,18 @@
 package ca.mdietr.achieved;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.IntentService;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.SQLException;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
@@ -239,7 +243,13 @@ public class TodayFragment extends Fragment {
     public void achieveGoal() {
         // TODO - Remove these lines, just used for testing the notifications
         Intent serviceIntent = NotificationIntentService.createIntentReminderNotification(getActivity().getApplicationContext());
-        getActivity().startService(serviceIntent);
+        PendingIntent pendingIntent = PendingIntent.getService(getActivity().getApplicationContext(), 0, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        int DELAY = 5000;
+        long futureInMillis = SystemClock.elapsedRealtime() + DELAY;
+        AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+        //Intent serviceIntent = NotificationIntentService.createIntentReminderNotification(getActivity().getApplicationContext());
+        //getActivity().startService(serviceIntent);
 
         if (todaysGoal == null || todaysGoal.isAchieved())
             return;
