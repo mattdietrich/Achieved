@@ -241,16 +241,6 @@ public class TodayFragment extends Fragment {
     }
 
     public void achieveGoal() {
-        // TODO - Remove these lines, just used for testing the notifications
-        Intent serviceIntent = NotificationIntentService.createIntentReminderNotification(getActivity().getApplicationContext());
-        PendingIntent pendingIntent = PendingIntent.getService(getActivity().getApplicationContext(), 0, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        int DELAY = 5000;
-        long futureInMillis = SystemClock.elapsedRealtime() + DELAY;
-        AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
-        //Intent serviceIntent = NotificationIntentService.createIntentReminderNotification(getActivity().getApplicationContext());
-        //getActivity().startService(serviceIntent);
-
         if (todaysGoal == null || todaysGoal.isAchieved())
             return;
 

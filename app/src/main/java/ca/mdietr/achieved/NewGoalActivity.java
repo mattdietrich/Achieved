@@ -1,9 +1,14 @@
 package ca.mdietr.achieved;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,11 +20,10 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Date;
 
-import ca.mdietr.achieved.R;
 import ca.mdietr.achieved.database.DatabaseAccessObject;
-import ca.mdietr.achieved.database.DatabaseContract;
 import ca.mdietr.achieved.model.Goal;
 import ca.mdietr.achieved.model.Reminder;
+import ca.mdietr.achieved.notification.NotificationIntentService;
 
 public class NewGoalActivity extends AppCompatActivity {
 
@@ -111,6 +115,10 @@ public class NewGoalActivity extends AppCompatActivity {
     }
 
     public void updateReminderTime(int hourOfDay, int minute) {
+        // Update the saved time values (so we can easily set an alarm later)
+        mHourOfDay = hourOfDay;
+        mMinute = minute;
+
         // Convert 24-hour time to 12-hour time
         String suffix;
         if(hourOfDay < 12)
@@ -122,8 +130,6 @@ public class NewGoalActivity extends AppCompatActivity {
         if (hourOfDay == 0)
             hourOfDay = 12;
 
-        mHourOfDay = hourOfDay;
-        mMinute = minute;
         reminderTimeText.setText(Integer.toString(hourOfDay) + ":" + String.format("%02d", minute) + " " + suffix);
     }
 
@@ -155,13 +161,22 @@ public class NewGoalActivity extends AppCompatActivity {
         calendar.setTime(goal.getDate());
         calendar.set(Calendar.HOUR_OF_DAY, mHourOfDay);
         calendar.set(Calendar.MINUTE, mMinute);
+        calendar.set(Calendar.SECOND, 0);
         Date reminderTime = calendar.getTime();
-
 
         Reminder newReminder = db.createReminder(reminderTime, reminderSwitch.isEnabled(), goal.getId());
 
         if (reminderSwitch.isEnabled()) {
             Toast.makeText(getApplicationContext(), "Tomorrow's reminder: " + reminderTimeText.getText(), Toast.LENGTH_SHORT).show();
+
+            // Set the notification alarm
+            Intent serviceIntent = NotificationIntentService.createIntentReminderNotification(getApplicationContext());
+            PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 0, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+            //Log.d("Current Time", String.valueOf(Calendar.getInstance().getTimeInMillis()));
+            //Log.d("Alarm Time", String.valueOf(calendar.getTimeInMillis()));
         }
 
     }
