@@ -57,6 +57,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:enabled="false"
             android:textColor="#000"
+            android:inputType="textMultiLine|textCapSentences"
             android:text="Ice cream!"/>
 
         <TextView

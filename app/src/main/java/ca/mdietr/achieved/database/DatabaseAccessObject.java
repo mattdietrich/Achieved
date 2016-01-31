@@ -111,7 +111,7 @@ public class DatabaseAccessObject {
                 DatabaseContract.GoalSchema.ALL_COLUMNS,
                 DatabaseContract.GoalSchema.COLUMN_NAME_DATE + "= \"" + dateToString(goalDate)+"\"",
                 null, null, null, null);
-        cursor.moveToFirst(); // TODO - handle multiple goals per date
+        cursor.moveToLast(); // TODO - handle multiple goals per date
 
         Goal newGoal = cursorToGoal(cursor);
         cursor.close();

@@ -22,6 +22,7 @@
             android:textStyle="bold"
             android:enabled="false"
             android:textColor="#000"
+            android:inputType="textMultiLine|textCapSentences"
             android:text="Finish making my app"/>
 
         </LinearLayout>

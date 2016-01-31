@@ -1,13 +1,18 @@
 package ca.mdietr.achieved;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.IntentService;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.SQLException;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
@@ -27,6 +32,7 @@ import java.util.Date;
 import ca.mdietr.achieved.database.DatabaseAccessObject;
 import ca.mdietr.achieved.model.Goal;
 import ca.mdietr.achieved.model.Reminder;
+import ca.mdietr.achieved.notification.NotificationIntentService;
 
 
 /**
@@ -265,8 +271,6 @@ public class TodayFragment extends Fragment {
                 });
         AlertDialog alert = builder.create();
         alert.show();
-
-        return;
     }
 
     public void switchToEditMode() {
@@ -329,11 +333,7 @@ public class TodayFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         Date today = calendar.getTime();
         Goal g = db.getGoal(today);
-
-//        calendar.add(Calendar.DAY_OF_YEAR, 1);
-//        Date tomorrow = calendar.getTime();
-//        Goal g = db.getGoal(tomorrow);
-
+        
         return g;
     }
 
