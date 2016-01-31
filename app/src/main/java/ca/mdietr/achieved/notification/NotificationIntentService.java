@@ -10,8 +10,13 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import ca.mdietr.achieved.MainActivity;
 import ca.mdietr.achieved.R;
+import ca.mdietr.achieved.database.DatabaseAccessObject;
+import ca.mdietr.achieved.model.Goal;
 
 /**
  * Created by Matt on 2016-01-27.
@@ -41,6 +46,14 @@ public class NotificationIntentService extends IntentService {
     }
 
     private void triggerReminderNotification() {
+        String goalText = "Achieve your Goals!";
+        String rewardText = "You can do it!";
+        Goal goal = getTodaysGoal();
+        if (goal != null) {
+            goalText = goal.getText();
+            if (goal.getReward() != null && !goal.getReward().equals(""))
+                rewardText = "Reward: " + goal.getReward();
+        }
 
         Intent mainIntent = new Intent(this.getApplicationContext(), MainActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, NOTIFICATION_ID, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -53,8 +66,8 @@ public class NotificationIntentService extends IntentService {
 
         Notification notification = builder
                 .setContentIntent(pIntent)
-                .setContentTitle("Title")
-                .setContentText("Text")
+                .setContentTitle(goalText)
+                .setContentText(rewardText)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setColor(getResources().getColor(R.color.primary))
                 .setSound(sound)
@@ -64,5 +77,15 @@ public class NotificationIntentService extends IntentService {
 
         final NotificationManager manager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         manager.notify(NOTIFICATION_ID, notification);
+    }
+
+
+    private Goal getTodaysGoal() {
+        DatabaseAccessObject db = DatabaseAccessObject.getInstance(getApplicationContext());
+
+        Calendar calendar = Calendar.getInstance();
+        Date today = calendar.getTime();
+        return db.getGoal(today);
+
     }
 }

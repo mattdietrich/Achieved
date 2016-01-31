@@ -333,11 +333,7 @@ public class TodayFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         Date today = calendar.getTime();
         Goal g = db.getGoal(today);
-
-//        calendar.add(Calendar.DAY_OF_YEAR, 1);
-//        Date tomorrow = calendar.getTime();
-//        Goal g = db.getGoal(tomorrow);
-
+        
         return g;
     }
 
