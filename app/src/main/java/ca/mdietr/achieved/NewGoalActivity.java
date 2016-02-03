@@ -145,9 +145,7 @@ public class NewGoalActivity extends AppCompatActivity {
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         Date tomorrow = calendar.getTime();
 
-        // TODO - Testing today's reminder
-//        Goal newGoal = db.createGoal(newGoalText.getText().toString(), tomorrow, newRewardText.getText().toString());
-        Goal newGoal = db.createGoal(newGoalText.getText().toString(), today, newRewardText.getText().toString());
+        Goal newGoal = db.createGoal(newGoalText.getText().toString(), tomorrow, newRewardText.getText().toString());
 
         Toast.makeText(getApplicationContext(), "Tomorrow's goal: " + newGoal.getText(), Toast.LENGTH_SHORT).show();
 
