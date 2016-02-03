@@ -145,7 +145,9 @@ public class NewGoalActivity extends AppCompatActivity {
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         Date tomorrow = calendar.getTime();
 
-        Goal newGoal = db.createGoal(newGoalText.getText().toString(), tomorrow, newRewardText.getText().toString());
+        // TODO - Testing today's reminder
+//        Goal newGoal = db.createGoal(newGoalText.getText().toString(), tomorrow, newRewardText.getText().toString());
+        Goal newGoal = db.createGoal(newGoalText.getText().toString(), today, newRewardText.getText().toString());
 
         Toast.makeText(getApplicationContext(), "Tomorrow's goal: " + newGoal.getText(), Toast.LENGTH_SHORT).show();
 
@@ -164,9 +166,9 @@ public class NewGoalActivity extends AppCompatActivity {
         calendar.set(Calendar.SECOND, 0);
         Date reminderTime = calendar.getTime();
 
-        Reminder newReminder = db.createReminder(reminderTime, reminderSwitch.isEnabled(), goal.getId());
+        Reminder newReminder = db.createReminder(reminderTime, reminderSwitch.isChecked(), goal.getId());
 
-        if (reminderSwitch.isEnabled()) {
+        if (reminderSwitch.isChecked()) {
             Toast.makeText(getApplicationContext(), "Tomorrow's reminder: " + reminderTimeText.getText(), Toast.LENGTH_SHORT).show();
 
             // Set the notification alarm

@@ -253,12 +253,12 @@ public class TodayFragment extends Fragment {
 
         // Show Congratulations + Reward Dialog
 
-        String rewardMessage = "";
-        if (todaysGoal.getReward() != null && todaysGoal.getReward() != "")
-            rewardMessage = "Reward yourself:\n" + todaysGoal.getReward();
+        String rewardMessage = "You did it!";
+        if (todaysGoal.getReward() != null && !todaysGoal.getReward().equals(""))
+            rewardMessage = rewardMessage + " Reward yourself:\n" + todaysGoal.getReward();
 
 
-        Toast.makeText(getActivity().getApplicationContext(), "Congrats!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity().getApplicationContext(), "Goal Achieved!", Toast.LENGTH_SHORT).show();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Goal Achieved!")
@@ -323,7 +323,9 @@ public class TodayFragment extends Fragment {
     public void refresh() {
         // TODO - Show Refresh Animation
         todaysGoal = getTodaysGoal();
+        Reminder todaysReminder = getReminder(todaysGoal);
         updateUIWithGoal(todaysGoal);
+        updateUIWithReminder(todaysReminder);
         // TODO - Hide Refresh Animation
     }
 
@@ -335,6 +337,14 @@ public class TodayFragment extends Fragment {
         Goal g = db.getGoal(today);
         
         return g;
+    }
+
+    private Reminder getReminder(Goal goal) {
+        DatabaseAccessObject db = DatabaseAccessObject.getInstance(getActivity().getApplicationContext());
+
+        Reminder r = db.getReminder(goal);
+
+        return r;
     }
 
     private void updateUIWithGoal(Goal goal) {
@@ -356,7 +366,7 @@ public class TodayFragment extends Fragment {
     }
 
     private void updateUIWithReminder(Reminder reminder) {
-        if (reminder == null) {
+        if (reminder == null || !reminder.isEnabled()) {
             // TODO - No Reminder message
             txtReminderTime.setText("None");
             reminderSwitch.setChecked(false);
@@ -368,13 +378,7 @@ public class TodayFragment extends Fragment {
         int hours = cal.get(Calendar.HOUR_OF_DAY);
         int minutes = cal.get(Calendar.MINUTE);
         updateReminderTime(hours, minutes);
-
-        if (reminder.isEnabled()) {
-            reminderSwitch.setChecked(true);
-        }
-        else {
-            reminderSwitch.setChecked(false);
-        }
+        reminderSwitch.setChecked(true);
     }
 
 }

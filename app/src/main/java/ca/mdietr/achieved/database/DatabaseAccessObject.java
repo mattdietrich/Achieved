@@ -27,6 +27,7 @@ public class DatabaseAccessObject {
     private Context mContext;
 
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");// new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final DateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     // Database fields
     private DatabaseHelper dbHelper;
@@ -150,7 +151,7 @@ public class DatabaseAccessObject {
         }
 
         ContentValues values = new ContentValues();
-        values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_DATETIME, dateToString(date));
+        values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_DATETIME, dateTimeToString(date));
         values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_ENABLED, isEnabled);
         values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_GOAL_ID, goalId);
 
@@ -164,6 +165,30 @@ public class DatabaseAccessObject {
         Reminder newReminder = cursorToReminder(cursor);
         cursor.close();
         return newReminder;
+    }
+
+    /**
+     * Retrieves the Reminder for the specified goal.
+     * Returns a Reminder object.
+     */
+    public Reminder getReminder (Goal goal) {
+        if (goal == null)
+            return null;
+        if (database == null || !database.isOpen())
+            open();
+        if (database == null || !database.isOpen()){
+            // TODO - Error Opening Database
+        }
+
+        Cursor cursor = database.query(DatabaseContract.ReminderSchema.TABLE_NAME,
+                DatabaseContract.ReminderSchema.ALL_COLUMNS,
+                DatabaseContract.ReminderSchema.COLUMN_NAME_GOAL_ID + " = " + goal.getId(),
+                null, null, null, null);
+        cursor.moveToLast();
+
+        Reminder reminder = cursorToReminder(cursor);
+        cursor.close();
+        return reminder;
     }
 
     /**
@@ -187,7 +212,7 @@ public class DatabaseAccessObject {
             return null;
         Reminder reminder = new Reminder();
         reminder.setId(cursor.getLong(0));
-        reminder.setDateTime(stringToDate(cursor.getString(1)));
+        reminder.setDateTime(stringToDateTime(cursor.getString(1)));
         reminder.setEnabled(intToBool(cursor.getInt(2)));
         reminder.setGoalId(cursor.getLong(3));
         return reminder;
@@ -197,11 +222,27 @@ public class DatabaseAccessObject {
         return DATE_FORMAT.format(date);
     }
 
+    private String dateTimeToString(Date dateTime) {
+        return DATETIME_FORMAT.format(dateTime);
+    }
+
     private Date stringToDate (String dateString) {
         Date d = new Date();
 
         try {
             d = DATE_FORMAT.parse(dateString);
+        }
+        catch (Exception e){
+            // TODO
+        }
+        return d;
+    }
+
+    private Date stringToDateTime (String dateTimeString) {
+        Date d = new Date();
+
+        try {
+            d = DATETIME_FORMAT.parse(dateTimeString);
         }
         catch (Exception e){
             // TODO
