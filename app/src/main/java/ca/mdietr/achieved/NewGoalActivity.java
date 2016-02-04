@@ -142,12 +142,10 @@ public class NewGoalActivity extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         Date today = calendar.getTime();
-        calendar.add(Calendar.DAY_OF_YEAR, 1);
-        Date tomorrow = calendar.getTime();
 
-        Goal newGoal = db.createGoal(newGoalText.getText().toString(), tomorrow, newRewardText.getText().toString());
+        Goal newGoal = db.createGoal(newGoalText.getText().toString(), today, newRewardText.getText().toString());
 
-        Toast.makeText(getApplicationContext(), "Tomorrow's goal: " + newGoal.getText(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Today's goal: " + newGoal.getText(), Toast.LENGTH_SHORT).show();
 
         confirmReminder(newGoal);
 
@@ -167,7 +165,7 @@ public class NewGoalActivity extends AppCompatActivity {
         Reminder newReminder = db.createReminder(reminderTime, reminderSwitch.isChecked(), goal.getId());
 
         if (reminderSwitch.isChecked()) {
-            Toast.makeText(getApplicationContext(), "Tomorrow's reminder: " + reminderTimeText.getText(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Today's reminder: " + reminderTimeText.getText(), Toast.LENGTH_SHORT).show();
 
             // Set the notification alarm
             Intent serviceIntent = NotificationIntentService.createIntentReminderNotification(getApplicationContext());
