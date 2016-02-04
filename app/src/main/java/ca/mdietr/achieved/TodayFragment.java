@@ -16,6 +16,8 @@ import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,6 +99,25 @@ public class TodayFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_today, container, false);
 
         txtGoal = (EditText) rootView.findViewById(R.id.card_view_achievement_name);
+        txtGoal.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isGoalBlank(txtGoal.getText().toString()))
+                    txtGoal.setError("Goal cannot be blank");
+                else
+                    txtGoal.setError(null);
+            }
+        });
 
         txtReminderTime = (TextView) rootView.findViewById(R.id.txt_reminder);
         txtReminderTime.setOnClickListener(new View.OnClickListener() {
@@ -157,9 +178,13 @@ public class TodayFragment extends Fragment {
         confirmEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveEditedGoal();
-                switchToDefaultMode();
-                refresh();
+                if (isGoalBlank(txtGoal.getText().toString()))
+                    txtGoal.setError("Goal cannot be blank");
+                else {
+                    saveEditedGoal();
+                    switchToDefaultMode();
+                    refresh();
+                }
             }
         });
 
@@ -381,4 +406,9 @@ public class TodayFragment extends Fragment {
         reminderSwitch.setChecked(true);
     }
 
+    private boolean isGoalBlank(String goal) {
+        if (goal == null)
+            return true;
+        return goal.trim().equalsIgnoreCase("");
+    }
 }
