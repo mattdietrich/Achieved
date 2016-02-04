@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,6 +46,25 @@ public class NewGoalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_goal);
 
         newGoalText = (EditText) findViewById(R.id.txt_new_goal);
+        newGoalText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isGoalBlank(newGoalText.getText().toString()))
+                    newGoalText.setError("Goal cannot be blank");
+                else
+                    newGoalText.setError(null);
+            }
+        });
         newRewardText = (EditText) findViewById(R.id.txt_new_goal_reward);
 
         mHourOfDay = 0;
@@ -80,7 +101,10 @@ public class NewGoalActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                confirmNewGoal();
+                if (isGoalBlank(newGoalText.getText().toString()))
+                    newGoalText.setError("Goal cannot be blank");
+                else
+                    confirmNewGoal();
             }
         });
 
@@ -177,5 +201,11 @@ public class NewGoalActivity extends AppCompatActivity {
             //Log.d("Alarm Time", String.valueOf(calendar.getTimeInMillis()));
         }
 
+    }
+
+    private boolean isGoalBlank(String goal) {
+        if (goal == null)
+            return true;
+        return goal.trim().equalsIgnoreCase("");
     }
 }
