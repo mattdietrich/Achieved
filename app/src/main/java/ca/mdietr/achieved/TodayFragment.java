@@ -112,7 +112,7 @@ public class TodayFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (isGoalBlank(txtGoal.getText().toString()))
+                if (todaysGoal != null && isGoalBlank(txtGoal.getText().toString()))
                     txtGoal.setError("Goal cannot be blank");
                 else
                     txtGoal.setError(null);
@@ -351,6 +351,18 @@ public class TodayFragment extends Fragment {
         Reminder todaysReminder = getReminder(todaysGoal);
         updateUIWithGoal(todaysGoal);
         updateUIWithReminder(todaysReminder);
+        if (todaysGoal == null) {
+            editButton.setEnabled(false);
+            editButton.setVisibility(View.INVISIBLE);
+            addButton.setEnabled(true);
+            addButton.setVisibility(View.VISIBLE);
+        }
+        else {
+            editButton.setEnabled(true);
+            editButton.setVisibility(View.VISIBLE);
+            addButton.setEnabled(false);
+            addButton.setVisibility(View.INVISIBLE);
+        }
         // TODO - Hide Refresh Animation
     }
 
