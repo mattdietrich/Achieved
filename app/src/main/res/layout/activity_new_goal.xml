@@ -16,7 +16,7 @@
         android:textSize="30sp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold"
-        android:inputType="textMultiLine|textCapSentences"
+        android:inputType="textCapSentences"
         android:hint="@string/new_goal_text_hint" />
 
     <GridLayout
@@ -63,8 +63,8 @@
             android:layout_height="wrap_content"
             android:layout_columnSpan="2"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:inputType="textMultiLine|textCapSentences"
-            android:hint="eg. Ice cream, Steak dinner, ..."/>
+            android:inputType="textCapSentences"
+            android:hint="Maybe some frozen yogurt?"/>
 
     </GridLayout>
 
