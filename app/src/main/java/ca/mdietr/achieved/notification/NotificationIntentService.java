@@ -93,7 +93,7 @@ public class NotificationIntentService extends IntentService {
     }
 
     private void triggerSetGoalNotification() {
-        Intent mainIntent = new Intent(this.getApplicationContext(), NewGoalActivity.class);
+        Intent mainIntent = new Intent(this.getApplicationContext(), MainActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, SET_GOAL_NOTIFICATION_ID, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -116,8 +116,12 @@ public class NotificationIntentService extends IntentService {
         final NotificationManager manager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         manager.notify(SET_GOAL_NOTIFICATION_ID, notification);
 
-        // Set the next notification alarm, take time from shared preferences
+        // Set the next notification alarm (if necessary), taking the time from shared preferences
         SharedPreferences spref = getApplicationContext().getSharedPreferences(getString(R.string.shared_preferences_name), MODE_PRIVATE);
+
+        // If the reminder is not enabled in shared preferences, then don't set it
+        if (!spref.getBoolean(getString(R.string.shared_preferences_set_goal_enabled),false))
+            return;
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, 1);

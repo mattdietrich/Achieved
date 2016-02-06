@@ -35,7 +35,7 @@
             android:layout_columnSpan="2"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
-            android:text="Remind Me:"/>
+            android:text="Reminder"/>
 
         <TextView
             android:id="@+id/txt_new_goal_reminder"
@@ -55,7 +55,7 @@
             android:layout_columnSpan="2"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
-            android:text="Reward Me:"/>
+            android:text="Reward"/>
 
         <EditText
             android:id="@+id/txt_new_goal_reward"

@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
-            android:text="Reminder:"/>
+            android:text="Reminder"/>
 
         <TextView
             android:id="@+id/txt_reminder"
@@ -47,7 +47,7 @@
             android:layout_columnSpan="2"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
-            android:text="Reward:"/>
+            android:text="Reward"/>
 
         <EditText
             android:id="@+id/txt_reward"
@@ -67,7 +67,7 @@
             android:layout_columnSpan="2"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
-            android:text="Status:"/>
+            android:text="Status"/>
 
         <TextView
             android:id="@+id/txt_status"

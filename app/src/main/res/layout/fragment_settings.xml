@@ -23,7 +23,7 @@
             android:layout_columnSpan="2"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
-            android:text="Remind me to set a daily goal:"/>
+            android:text="Reminder to set a daily goal"/>
 
         <TextView
             android:id="@+id/txt_settings_reminder"
