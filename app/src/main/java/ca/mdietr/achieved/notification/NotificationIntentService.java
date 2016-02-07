@@ -8,6 +8,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
@@ -74,6 +76,8 @@ public class NotificationIntentService extends IntentService {
 
         NotificationCompat.Action action = new NotificationCompat.Action(R.drawable.ic_action_confirm, "Achieve", pIntent);
 
+        Resources resources = getApplicationContext().getResources(),systemResources = Resources.getSystem();
+
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
         Notification notification = builder
@@ -82,6 +86,8 @@ public class NotificationIntentService extends IntentService {
                 .setContentText(rewardText)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setColor(getResources().getColor(R.color.primary))
+                .setLights(Color.GREEN, resources.getInteger(systemResources.getIdentifier("config_defaultNotificationLedOn", "integer", "android")),
+                        resources.getInteger(systemResources.getIdentifier("config_defaultNotificationLedOff", "integer", "android")))
                 .setSound(sound)
                 .setAutoCancel(true)
                 .addAction(action)
@@ -99,6 +105,8 @@ public class NotificationIntentService extends IntentService {
 
         NotificationCompat.Action action = new NotificationCompat.Action(R.drawable.ic_action_new, "Set Goal", pIntent);
 
+        Resources resources = getApplicationContext().getResources(),systemResources = Resources.getSystem();
+
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
         Notification notification = builder
@@ -107,6 +115,8 @@ public class NotificationIntentService extends IntentService {
                 .setContentText("What will you achieve today?")
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setColor(getResources().getColor(R.color.primary))
+                .setLights(Color.GREEN, resources.getInteger(systemResources.getIdentifier("config_defaultNotificationLedOn", "integer", "android")),
+                        resources.getInteger(systemResources.getIdentifier("config_defaultNotificationLedOff", "integer", "android")))
                 .setSound(sound)
                 .setAutoCancel(true)
                 .addAction(action)
