@@ -2,17 +2,14 @@ package ca.mdietr.achieved;
 
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.IntentService;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.SQLException;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
@@ -24,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,8 +61,12 @@ public class TodayFragment extends Fragment {
     private ImageButton confirmEditButton;
 
     private Goal todaysGoal;
+    private Reminder todaysReminder;
 
     private boolean isGoalEditable = false;
+
+    private int mReminderHourOfDay;
+    private int mReminderMinute;
 
     /**
      * Use this factory method to create a new instance of
@@ -181,7 +181,7 @@ public class TodayFragment extends Fragment {
                 if (isGoalBlank(txtGoal.getText().toString()))
                     txtGoal.setError("Goal cannot be blank");
                 else {
-                    saveEditedGoal();
+                    saveEditedGoalAndReminder();
                     switchToDefaultMode();
                     refresh();
                 }
@@ -192,6 +192,7 @@ public class TodayFragment extends Fragment {
             @Override
             public void onTimeSet(android.widget.TimePicker view, int hourOfDay, int minute) {
                 updateReminderTime(hourOfDay, minute);
+                reminderSwitch.setChecked(true);
             }
         };
 
@@ -247,7 +248,7 @@ public class TodayFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    public void saveEditedGoal() {
+    public void saveEditedGoalAndReminder() {
         if (todaysGoal == null)
             return;
 
@@ -257,12 +258,27 @@ public class TodayFragment extends Fragment {
         DatabaseAccessObject db = DatabaseAccessObject.getInstance(getActivity().getApplicationContext());
         db.updateGoal(todaysGoal);
 
+        // Save the edited reminder in the database
+        if (todaysReminder != null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(todaysGoal.getDate());
+            calendar.set(Calendar.HOUR_OF_DAY, mReminderHourOfDay);
+            calendar.set(Calendar.MINUTE, mReminderMinute);
+            calendar.set(Calendar.SECOND, 0);
+            Date reminderTime = calendar.getTime();
+
+            todaysReminder.setEnabled(reminderSwitch.isChecked());
+            todaysReminder.setDateTime(reminderTime);
+            db.updateReminder(todaysReminder);
+
+            cancelReminderAlarm(); // Cancel the old alarm
+            if (todaysReminder.isEnabled()) // Set a new one, if necessary
+                setReminderAlarm();
+        }
+
         refresh();
 
         Toast.makeText(getActivity().getApplicationContext(), "Saved changes", Toast.LENGTH_SHORT).show();
-
-        // TODO - save updated Reminder Update Reminder
-
     }
 
     public void achieveGoal() {
@@ -270,6 +286,7 @@ public class TodayFragment extends Fragment {
             return;
 
         // Update Goal achieved flag in Database
+
         todaysGoal.setAchieved(true);
         DatabaseAccessObject db = DatabaseAccessObject.getInstance(getActivity().getApplicationContext());
         db.updateGoal(todaysGoal);
@@ -331,6 +348,10 @@ public class TodayFragment extends Fragment {
     }
 
     public void updateReminderTime(int hourOfDay, int minute) {
+        // Update the saved time values (so we can easily set an alarm later)
+        mReminderHourOfDay = hourOfDay;
+        mReminderMinute = minute;
+
         // Convert 24-hour time to 12-hour time
         String suffix;
         if(hourOfDay < 12)
@@ -348,7 +369,7 @@ public class TodayFragment extends Fragment {
     public void refresh() {
         // TODO - Show Refresh Animation
         todaysGoal = getTodaysGoal();
-        Reminder todaysReminder = getReminder(todaysGoal);
+        todaysReminder = getReminder(todaysGoal);
         updateUIWithGoal(todaysGoal);
         updateUIWithReminder(todaysReminder);
         if (todaysGoal == null) {
@@ -364,6 +385,24 @@ public class TodayFragment extends Fragment {
             addButton.setVisibility(View.INVISIBLE);
         }
         // TODO - Hide Refresh Animation
+    }
+
+    private void setReminderAlarm() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(todaysReminder.getDateTime());
+
+        Intent serviceIntent = NotificationIntentService.createIntentReminderNotification(getActivity().getApplicationContext());
+        PendingIntent pendingIntent = PendingIntent.getService(getActivity().getApplicationContext(), 1, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+    }
+
+    private void cancelReminderAlarm() {
+        Intent serviceIntent = NotificationIntentService.createIntentReminderNotification(getActivity().getApplicationContext());
+        PendingIntent pendingIntent = PendingIntent.getService(getActivity().getApplicationContext(), 1, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent.cancel();
+        AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
     }
 
     private Goal getTodaysGoal() {
@@ -405,7 +444,6 @@ public class TodayFragment extends Fragment {
     private void updateUIWithReminder(Reminder reminder) {
         if (reminder == null || !reminder.isEnabled()) {
             // TODO - No Reminder message
-            txtReminderTime.setText("None");
             reminderSwitch.setChecked(false);
             return;
         }

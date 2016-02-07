@@ -204,7 +204,6 @@ public class SettingsFragment extends Fragment {
         pendingIntent.cancel();
         AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
-
     }
 
     private void updateSharedPreferences(boolean isEnabled) {

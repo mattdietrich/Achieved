@@ -120,7 +120,8 @@ public class DatabaseAccessObject {
     }
 
     /**
-     * Updates the goal spec*/
+     * Updates the goal
+     */
     public long updateGoal (Goal goal) {
         if (database == null || !database.isOpen())
             open();
@@ -182,13 +183,34 @@ public class DatabaseAccessObject {
 
         Cursor cursor = database.query(DatabaseContract.ReminderSchema.TABLE_NAME,
                 DatabaseContract.ReminderSchema.ALL_COLUMNS,
-                DatabaseContract.ReminderSchema.COLUMN_NAME_GOAL_ID + " = " + goal.getId(),
+                DatabaseContract.ReminderSchema.COLUMN_NAME_GOAL_ID + " = ?",
+                new String[] {String.valueOf(goal.getId())},
                 null, null, null, null);
         cursor.moveToLast();
 
         Reminder reminder = cursorToReminder(cursor);
         cursor.close();
         return reminder;
+    }
+
+    /**
+     * Updates the reminder
+     */
+    public long updateReminder (Reminder reminder) {
+        if (database == null || !database.isOpen())
+            open();
+        if (database == null || !database.isOpen()){
+            // TODO - Error Opening Database
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_DATETIME, dateTimeToString(reminder.getDateTime()));
+        values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_ENABLED, reminder.isEnabled());
+        values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_GOAL_ID, reminder.getGoalId());
+
+        long updateId = database.update(DatabaseContract.ReminderSchema.TABLE_NAME, values, DatabaseContract.ReminderSchema.COLUMN_NAME_ID + " = ?", new String[] {String.valueOf(reminder.getId())});
+
+        return updateId;
     }
 
     /**

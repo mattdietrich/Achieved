@@ -193,7 +193,7 @@ public class NewGoalActivity extends AppCompatActivity {
 
             // Set the notification alarm
             Intent serviceIntent = NotificationIntentService.createIntentReminderNotification(getApplicationContext());
-            PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 0, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 1, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 

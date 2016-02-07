@@ -16,7 +16,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import ca.mdietr.achieved.MainActivity;
-import ca.mdietr.achieved.NewGoalActivity;
 import ca.mdietr.achieved.R;
 import ca.mdietr.achieved.database.DatabaseAccessObject;
 import ca.mdietr.achieved.model.Goal;
@@ -26,8 +25,8 @@ import ca.mdietr.achieved.model.Goal;
  */
 public class NotificationIntentService extends IntentService {
 
-    private static final int SET_GOAL_NOTIFICATION_ID = 1;
-    private static final int REMINDER_NOTIFICATION_ID = 2;
+    private static final int SET_GOAL_NOTIFICATION_ID = 0;
+    private static final int REMINDER_NOTIFICATION_ID = 1;
     private static final String ACTION_SET_GOAL = "ACTION_SET_GOAL";
     private static final String ACTION_REMINDER = "ACTION_REMINDER";
 
