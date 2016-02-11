@@ -214,6 +214,25 @@ public class DatabaseAccessObject {
     }
 
     /**
+     * Get Achievements Cursor
+     */
+    public Cursor getAchievementsCursor () {
+        if (database == null || !database.isOpen())
+            open();
+        if (database == null || !database.isOpen()){
+            // TODO - Error Opening Database
+        }
+
+        Cursor cursor = database.query(DatabaseContract.GoalSchema.TABLE_NAME,
+                DatabaseContract.GoalSchema.ALL_COLUMNS,
+                DatabaseContract.GoalSchema.COLUMN_NAME_ACHIEVED + " = 1",
+                null, null, null, DatabaseContract.GoalSchema.COLUMN_NAME_DATE + " DESC", null);
+        cursor.moveToFirst();
+
+        return cursor;
+    }
+
+    /**
      * Below are some helper functions (data type conversions)
      */
 

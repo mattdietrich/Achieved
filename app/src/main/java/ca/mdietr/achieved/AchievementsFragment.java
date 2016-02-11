@@ -1,12 +1,17 @@
 package ca.mdietr.achieved;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import ca.mdietr.achieved.achievements.AchievementsCursorAdapter;
+import ca.mdietr.achieved.database.DatabaseAccessObject;
 
 
 /**
@@ -18,6 +23,9 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class AchievementsFragment extends Fragment {
+
+    private ListView listView;
+    private AchievementsCursorAdapter cursorAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -43,14 +51,17 @@ public class AchievementsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_achievements, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_achievements, container, false);
+
+        listView = (ListView) rootView.findViewById(R.id.lv_achievements);
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -77,6 +88,28 @@ public class AchievementsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        refresh();
+    }
+
+    private void refresh() {
+        Cursor cursor = getAchievementsCursor();
+        if (cursorAdapter == null) {
+            cursorAdapter = new AchievementsCursorAdapter(getActivity(), cursor);
+            listView.setAdapter(cursorAdapter);
+        } else {
+            cursorAdapter.changeCursor(cursor);
+        }
+    }
+
+    private Cursor getAchievementsCursor() {
+        DatabaseAccessObject db = DatabaseAccessObject.getInstance(getActivity().getApplicationContext());
+        return db.getAchievementsCursor();
     }
 
     /**
