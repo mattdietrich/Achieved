@@ -8,7 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import ca.mdietr.achieved.R;
+import ca.mdietr.achieved.database.DataTypeConversion;
 import ca.mdietr.achieved.database.DatabaseContract;
 
 /**
@@ -33,11 +36,15 @@ public class AchievementsCursorAdapter  extends CursorAdapter {
         // Retrieve fields to populate in inflated template
         TextView txtAchievement = (TextView) view.findViewById(R.id.txt_achievement);
         TextView txtDate = (TextView) view.findViewById(R.id.txt_achievement_date);
+
         // Retrieve data from cursor
         String achievement = cursor.getString(cursor.getColumnIndex(DatabaseContract.GoalSchema.COLUMN_NAME_TEXT));
-        String date = cursor.getString(cursor.getColumnIndex(DatabaseContract.GoalSchema.COLUMN_NAME_DATE));
+        String dateString = cursor.getString(cursor.getColumnIndex(DatabaseContract.GoalSchema.COLUMN_NAME_DATE));
+        Date date = DataTypeConversion.stringToDate(dateString);
+        dateString = DataTypeConversion.dateToFriendlyString(date);
+
         // Populate views with data
         txtAchievement.setText(achievement);
-        txtDate.setText(date);
+        txtDate.setText(dateString);
     }
 }

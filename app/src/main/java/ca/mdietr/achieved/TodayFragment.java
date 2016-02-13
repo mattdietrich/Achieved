@@ -98,7 +98,7 @@ public class TodayFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_today, container, false);
 
-        txtGoal = (EditText) rootView.findViewById(R.id.card_view_achievement_name);
+        txtGoal = (EditText) rootView.findViewById(R.id.card_view_goal_name);
         txtGoal.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

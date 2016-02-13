@@ -107,7 +107,7 @@
                 </layer-list>
             </item>
 
-            <!-- Blue button pressed -->
+            <!-- Green button pressed -->
             <item>
                 <shape android:shape="oval">
                     <solid android:color="@color/primary_light"/>
@@ -224,7 +224,7 @@
                 </layer-list>
             </item>
 
-            <!-- Blue button -->
+            <!-- Green button -->
             <item>
                 <shape android:shape="oval">
                     <solid android:color="@color/primary"/>

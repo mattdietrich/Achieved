@@ -5,13 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.ContactsContract;
 
-import java.text.DateFormat;
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Formatter;
 
 import ca.mdietr.achieved.model.Goal;
 import ca.mdietr.achieved.model.Reminder;
@@ -25,9 +20,6 @@ public class DatabaseAccessObject {
     private static DatabaseAccessObject mInstance;
 
     private Context mContext;
-
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");// new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private static final DateFormat DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     // Database fields
     private DatabaseHelper dbHelper;
@@ -81,7 +73,7 @@ public class DatabaseAccessObject {
 
         ContentValues values = new ContentValues();
         values.put(DatabaseContract.GoalSchema.COLUMN_NAME_TEXT, text);
-        values.put(DatabaseContract.GoalSchema.COLUMN_NAME_DATE, dateToString(date));
+        values.put(DatabaseContract.GoalSchema.COLUMN_NAME_DATE, DataTypeConversion.dateToString(date));
         values.put(DatabaseContract.GoalSchema.COLUMN_NAME_REWARD, reward);
         values.put(DatabaseContract.GoalSchema.COLUMN_NAME_ACHIEVED, 0);
 
@@ -92,7 +84,7 @@ public class DatabaseAccessObject {
                 null, null, null, null);
         cursor.moveToFirst();
 
-        Goal newGoal = cursorToGoal(cursor);
+        Goal newGoal = DataTypeConversion.cursorToGoal(cursor);
         cursor.close();
         return newGoal;
     }
@@ -110,11 +102,11 @@ public class DatabaseAccessObject {
 
         Cursor cursor = database.query(DatabaseContract.GoalSchema.TABLE_NAME,
                 DatabaseContract.GoalSchema.ALL_COLUMNS,
-                DatabaseContract.GoalSchema.COLUMN_NAME_DATE + "= \"" + dateToString(goalDate)+"\"",
+                DatabaseContract.GoalSchema.COLUMN_NAME_DATE + "= \"" + DataTypeConversion.dateToString(goalDate)+"\"",
                 null, null, null, null);
         cursor.moveToLast(); // TODO - handle multiple goals per date
 
-        Goal newGoal = cursorToGoal(cursor);
+        Goal newGoal = DataTypeConversion.cursorToGoal(cursor);
         cursor.close();
         return newGoal;
     }
@@ -131,7 +123,7 @@ public class DatabaseAccessObject {
 
         ContentValues values = new ContentValues();
         values.put(DatabaseContract.GoalSchema.COLUMN_NAME_TEXT, goal.getText());
-        values.put(DatabaseContract.GoalSchema.COLUMN_NAME_DATE, dateToString(goal.getDate()));
+        values.put(DatabaseContract.GoalSchema.COLUMN_NAME_DATE, DataTypeConversion.dateToString(goal.getDate()));
         values.put(DatabaseContract.GoalSchema.COLUMN_NAME_REWARD, goal.getReward());
         values.put(DatabaseContract.GoalSchema.COLUMN_NAME_ACHIEVED, goal.isAchieved());
 
@@ -152,7 +144,7 @@ public class DatabaseAccessObject {
         }
 
         ContentValues values = new ContentValues();
-        values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_DATETIME, dateTimeToString(date));
+        values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_DATETIME, DataTypeConversion.dateTimeToString(date));
         values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_ENABLED, isEnabled);
         values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_GOAL_ID, goalId);
 
@@ -163,7 +155,7 @@ public class DatabaseAccessObject {
                 null, null, null, null);
         cursor.moveToFirst();
 
-        Reminder newReminder = cursorToReminder(cursor);
+        Reminder newReminder = DataTypeConversion.cursorToReminder(cursor);
         cursor.close();
         return newReminder;
     }
@@ -188,7 +180,7 @@ public class DatabaseAccessObject {
                 null, null, null, null);
         cursor.moveToLast();
 
-        Reminder reminder = cursorToReminder(cursor);
+        Reminder reminder = DataTypeConversion.cursorToReminder(cursor);
         cursor.close();
         return reminder;
     }
@@ -204,7 +196,7 @@ public class DatabaseAccessObject {
         }
 
         ContentValues values = new ContentValues();
-        values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_DATETIME, dateTimeToString(reminder.getDateTime()));
+        values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_DATETIME, DataTypeConversion.dateTimeToString(reminder.getDateTime()));
         values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_ENABLED, reminder.isEnabled());
         values.put(DatabaseContract.ReminderSchema.COLUMN_NAME_GOAL_ID, reminder.getGoalId());
 
@@ -230,72 +222,5 @@ public class DatabaseAccessObject {
         cursor.moveToFirst();
 
         return cursor;
-    }
-
-    /**
-     * Below are some helper functions (data type conversions)
-     */
-
-    private Goal cursorToGoal(Cursor cursor) {
-        if (cursor.getCount() < 1)
-            return null;
-        Goal goal = new Goal();
-        goal.setId(cursor.getLong(0));
-        goal.setText(cursor.getString(1));
-        goal.setDate(stringToDate(cursor.getString(2)));
-        goal.setReward(cursor.getString(3));
-        goal.setAchieved(intToBool(cursor.getInt(4)));
-        return goal;
-    }
-
-    private Reminder cursorToReminder(Cursor cursor) {
-        if (cursor.getCount() < 1)
-            return null;
-        Reminder reminder = new Reminder();
-        reminder.setId(cursor.getLong(0));
-        reminder.setDateTime(stringToDateTime(cursor.getString(1)));
-        reminder.setEnabled(intToBool(cursor.getInt(2)));
-        reminder.setGoalId(cursor.getLong(3));
-        return reminder;
-    }
-
-    private String dateToString(Date date) {
-        return DATE_FORMAT.format(date);
-    }
-
-    private String dateTimeToString(Date dateTime) {
-        return DATETIME_FORMAT.format(dateTime);
-    }
-
-    private Date stringToDate (String dateString) {
-        Date d = new Date();
-
-        try {
-            d = DATE_FORMAT.parse(dateString);
-        }
-        catch (Exception e){
-            // TODO
-        }
-        return d;
-    }
-
-    private Date stringToDateTime (String dateTimeString) {
-        Date d = new Date();
-
-        try {
-            d = DATETIME_FORMAT.parse(dateTimeString);
-        }
-        catch (Exception e){
-            // TODO
-        }
-        return d;
-    }
-
-    private int boolToInt (boolean b) {
-        return b ? 1 : 0;
-    }
-
-    private boolean intToBool (int i) {
-        return i != 0;
     }
 }
