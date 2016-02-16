@@ -60,13 +60,11 @@ public class NotificationIntentService extends IntentService {
     }
 
     private void triggerReminderNotification() {
-        String goalText = "Achieve your Goals!";
-        String rewardText = "You can do it!";
+        String notificationTitle = "Achieve your Goal!";
+        String notificationContent = "You can do it!";
         Goal goal = getTodaysGoal();
         if (goal != null) {
-            goalText = goal.getText();
-            if (goal.getReward() != null && !goal.getReward().equals(""))
-                rewardText = "Reward: " + goal.getReward();
+            notificationContent = goal.getText();
         }
 
         Intent mainIntent = new Intent(this.getApplicationContext(), MainActivity.class);
@@ -82,9 +80,9 @@ public class NotificationIntentService extends IntentService {
 
         Notification notification = builder
                 .setContentIntent(pIntent)
-                .setContentTitle(goalText)
-                .setContentText(rewardText)
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setContentTitle(notificationTitle)
+                .setContentText(notificationContent)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setColor(getResources().getColor(R.color.primary))
                 .setLights(Color.GREEN, resources.getInteger(systemResources.getIdentifier("config_defaultNotificationLedOn", "integer", "android")),
                         resources.getInteger(systemResources.getIdentifier("config_defaultNotificationLedOff", "integer", "android")))
@@ -113,7 +111,7 @@ public class NotificationIntentService extends IntentService {
                 .setContentIntent(pIntent)
                 .setContentTitle("Set Today's Goal")
                 .setContentText("What will you achieve today?")
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setColor(getResources().getColor(R.color.primary))
                 .setLights(Color.GREEN, resources.getInteger(systemResources.getIdentifier("config_defaultNotificationLedOn", "integer", "android")),
                         resources.getInteger(systemResources.getIdentifier("config_defaultNotificationLedOff", "integer", "android")))
