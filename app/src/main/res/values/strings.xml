@@ -10,7 +10,7 @@
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
     <string name="no_goal_title">Hi there!</string>
-    <string name="no_goal_message">It\'s time to set today\'s goal.\nHit the \"+\" button to get started.</string>
+    <string name="no_goal_message">It\'s time to set today\'s goal.\nHit the \"+\" below to get started.</string>
     <string name="no_achievements_title">Ooops!</string>
     <string name="no_achievements_message">No saved achievements found.\nGo to \"Today\" to start achieving.</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
