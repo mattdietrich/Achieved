@@ -318,9 +318,9 @@ public class TodayFragment extends Fragment {
 
         // Show Congratulations + Reward Dialog
 
-        String rewardMessage = "You did it!";
+        String rewardMessage = "I knew you could do it!";
         if (todaysGoal.getReward() != null && !todaysGoal.getReward().equals(""))
-            rewardMessage = rewardMessage + " Reward yourself:\n" + todaysGoal.getReward();
+            rewardMessage = "Reward yourself:\n" + todaysGoal.getReward();
 
 
         Toast.makeText(getActivity().getApplicationContext(), "Goal Achieved!", Toast.LENGTH_SHORT).show();
