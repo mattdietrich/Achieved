@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/img_achievement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:src="@drawable/ic_green_check" />
 
     <TextView
@@ -17,8 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:paddingLeft="@dimen/abc_list_item_padding_horizontal_material"
-        android:paddingRight="@dimen/abc_list_item_padding_horizontal_material"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:maxLength="25"
         android:textColor="#000"
         android:text="Achievement"/>
