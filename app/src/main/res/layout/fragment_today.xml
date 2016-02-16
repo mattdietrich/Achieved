@@ -7,6 +7,24 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity$PlaceholderFragment">
 
+    <TextView
+        android:id="@+id/no_goal_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:text="@string/no_goal_title"/>
+
+    <TextView
+        android:id="@+id/no_goal_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/no_goal_title"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:visibility="gone"
+        android:text="@string/no_goal_message"/>
+
     <include layout="@layout/card_view_goal"
         android:id="@+id/include"/>
 

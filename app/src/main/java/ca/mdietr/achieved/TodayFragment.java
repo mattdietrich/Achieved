@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -46,10 +47,14 @@ public class TodayFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     // UI Controls
+    private View cardInclude;
     private EditText txtGoal;
+    private TextView txtReminderLabel;
     private TextView txtReminderTime;
     private SwitchCompat reminderSwitch;
+    private TextView txtRewardLabel;
     private EditText txtReward;
+    private TextView txtStatusLabel;
     private TextView txtStatus;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     private LinearLayout defaultButtonRow;
@@ -59,6 +64,12 @@ public class TodayFragment extends Fragment {
     private ImageButton editButton;
     private ImageButton cancelEditButton;
     private ImageButton confirmEditButton;
+
+    private TextView txtNoGoalTitle;
+    private TextView txtNoGoalMessage;
+
+    private View[] formViews;
+    private View[] noGoalViews;
 
     private Goal todaysGoal;
     private Reminder todaysReminder;
@@ -97,6 +108,11 @@ public class TodayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_today, container, false);
+
+        cardInclude = rootView.findViewById(R.id.include);
+        txtReminderLabel = (TextView) rootView.findViewById(R.id.txt_reminder_label);
+        txtRewardLabel = (TextView) rootView.findViewById(R.id.txt_reward_label);
+        txtStatusLabel = (TextView) rootView.findViewById(R.id.txt_status_label);
 
         txtGoal = (EditText) rootView.findViewById(R.id.card_view_goal_name);
         txtGoal.addTextChangedListener(new TextWatcher() {
@@ -195,6 +211,13 @@ public class TodayFragment extends Fragment {
                 reminderSwitch.setChecked(true);
             }
         };
+
+        formViews = new View[] {cardInclude, txtReminderLabel, txtReminderTime, reminderSwitch, txtRewardLabel, txtReward, txtStatusLabel, txtStatus};
+
+        txtNoGoalTitle = (TextView) rootView.findViewById(R.id.no_goal_title);
+        txtNoGoalMessage = (TextView) rootView.findViewById(R.id.no_goal_message);
+
+        noGoalViews = new View[] {txtNoGoalTitle, txtNoGoalMessage};
 
         return rootView;
     }
@@ -373,18 +396,30 @@ public class TodayFragment extends Fragment {
         updateUIWithGoal(todaysGoal);
         updateUIWithReminder(todaysReminder);
         if (todaysGoal == null) {
+            setViewListVisibility(formViews, View.GONE); // Hide the form fields
+            setViewListVisibility(noGoalViews, View.VISIBLE); // Show the "No Goal" message
+
             editButton.setEnabled(false);
             editButton.setVisibility(View.INVISIBLE);
             addButton.setEnabled(true);
             addButton.setVisibility(View.VISIBLE);
         }
         else {
+            setViewListVisibility(formViews, View.VISIBLE); // Show the form fields
+            setViewListVisibility(noGoalViews, View.GONE); // Hide the "No Goal" message
+
             editButton.setEnabled(true);
             editButton.setVisibility(View.VISIBLE);
             addButton.setEnabled(false);
             addButton.setVisibility(View.INVISIBLE);
         }
         // TODO - Hide Refresh Animation
+    }
+
+    private void setViewListVisibility(View[] viewList, int visibility) {
+        for (View v: viewList) {
+            v.setVisibility(visibility);
+        }
     }
 
     private void setReminderAlarm() {
