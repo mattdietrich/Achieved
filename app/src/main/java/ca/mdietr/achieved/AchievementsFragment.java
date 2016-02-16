@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import ca.mdietr.achieved.achievements.AchievementsCursorAdapter;
 import ca.mdietr.achieved.database.DatabaseAccessObject;
@@ -25,6 +26,12 @@ import ca.mdietr.achieved.database.DatabaseAccessObject;
 public class AchievementsFragment extends Fragment {
 
     private ListView listView;
+
+    private TextView txtNoAchievementsTitle;
+    private TextView txtNoAchievementsMessage;
+
+    private View[] noAchievementsViews;
+
     private AchievementsCursorAdapter cursorAdapter;
 
     private OnFragmentInteractionListener mListener;
@@ -60,6 +67,11 @@ public class AchievementsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_achievements, container, false);
 
         listView = (ListView) rootView.findViewById(R.id.lv_achievements);
+
+        txtNoAchievementsTitle = (TextView) rootView.findViewById(R.id.no_achievements_title);
+        txtNoAchievementsMessage = (TextView) rootView.findViewById(R.id.no_achievements_message);
+
+        noAchievementsViews = new View[] {txtNoAchievementsTitle, txtNoAchievementsMessage};
 
         return rootView;
     }
@@ -99,11 +111,21 @@ public class AchievementsFragment extends Fragment {
 
     private void refresh() {
         Cursor cursor = getAchievementsCursor();
+        if (cursor == null || cursor.getCount() <= 0 )
+            setViewListVisibility(noAchievementsViews, View.VISIBLE); // Show the "No Achievements" message
+        else
+            setViewListVisibility(noAchievementsViews, View.GONE); // Hide the "No Achievements" message
         if (cursorAdapter == null) {
             cursorAdapter = new AchievementsCursorAdapter(getActivity(), cursor);
             listView.setAdapter(cursorAdapter);
         } else {
             cursorAdapter.changeCursor(cursor);
+        }
+    }
+
+    private void setViewListVisibility(View[] viewList, int visibility) {
+        for (View v: viewList) {
+            v.setVisibility(visibility);
         }
     }
 
