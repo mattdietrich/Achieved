@@ -60,7 +60,7 @@ public class NotificationIntentService extends IntentService {
     }
 
     private void triggerReminderNotification() {
-        String notificationTitle = "Achieve your Goal!";
+        String notificationTitle = "Achieve your Goal";
         String notificationContent = "You can do it!";
         Goal goal = getTodaysGoal();
         if (goal != null) {
@@ -71,8 +71,6 @@ public class NotificationIntentService extends IntentService {
         PendingIntent pIntent = PendingIntent.getActivity(this, REMINDER_NOTIFICATION_ID, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-        NotificationCompat.Action action = new NotificationCompat.Action(R.drawable.ic_action_confirm, "Achieve", pIntent);
 
         Resources resources = getApplicationContext().getResources(),systemResources = Resources.getSystem();
 
@@ -88,7 +86,6 @@ public class NotificationIntentService extends IntentService {
                         resources.getInteger(systemResources.getIdentifier("config_defaultNotificationLedOff", "integer", "android")))
                 .setSound(sound)
                 .setAutoCancel(true)
-                .addAction(action)
                 .build();
 
         final NotificationManager manager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
@@ -100,8 +97,6 @@ public class NotificationIntentService extends IntentService {
         PendingIntent pIntent = PendingIntent.getActivity(this, SET_GOAL_NOTIFICATION_ID, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-        NotificationCompat.Action action = new NotificationCompat.Action(R.drawable.ic_action_new, "Set Goal", pIntent);
 
         Resources resources = getApplicationContext().getResources(),systemResources = Resources.getSystem();
 
@@ -117,7 +112,6 @@ public class NotificationIntentService extends IntentService {
                         resources.getInteger(systemResources.getIdentifier("config_defaultNotificationLedOff", "integer", "android")))
                 .setSound(sound)
                 .setAutoCancel(true)
-                .addAction(action)
                 .build();
 
         final NotificationManager manager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
