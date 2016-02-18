@@ -1,4 +1,4 @@
-package ca.mdietr.achieved.achievements;
+package ca.mattdietrich.achieved.achievements;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import java.util.Date;
 
-import ca.mdietr.achieved.R;
-import ca.mdietr.achieved.database.DataTypeConversion;
-import ca.mdietr.achieved.database.DatabaseContract;
+import ca.mattdietrich.achieved.R;
+import ca.mattdietrich.achieved.database.DataTypeConversion;
+import ca.mattdietrich.achieved.database.DatabaseContract;
 
 /**
  * Cursor adapter for a list of achievements

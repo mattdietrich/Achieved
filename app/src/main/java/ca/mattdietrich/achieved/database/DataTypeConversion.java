@@ -1,4 +1,4 @@
-package ca.mdietr.achieved.database;
+package ca.mattdietrich.achieved.database;
 
 import android.database.Cursor;
 
@@ -6,8 +6,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import ca.mdietr.achieved.model.Goal;
-import ca.mdietr.achieved.model.Reminder;
+import ca.mattdietrich.achieved.model.Goal;
+import ca.mattdietrich.achieved.model.Reminder;
 
 /**
  * Contains some helper functions for data type conversions

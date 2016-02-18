@@ -1,4 +1,4 @@
-package ca.mdietr.achieved;
+package ca.mattdietrich.achieved;
 
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;

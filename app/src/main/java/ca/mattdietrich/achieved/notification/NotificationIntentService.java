@@ -1,4 +1,4 @@
-package ca.mdietr.achieved.notification;
+package ca.mattdietrich.achieved.notification;
 
 import android.app.AlarmManager;
 import android.app.IntentService;
@@ -17,10 +17,10 @@ import android.support.v4.app.NotificationCompat;
 import java.util.Calendar;
 import java.util.Date;
 
-import ca.mdietr.achieved.MainActivity;
-import ca.mdietr.achieved.R;
-import ca.mdietr.achieved.database.DatabaseAccessObject;
-import ca.mdietr.achieved.model.Goal;
+import ca.mattdietrich.achieved.MainActivity;
+import ca.mattdietrich.achieved.R;
+import ca.mattdietrich.achieved.database.DatabaseAccessObject;
+import ca.mattdietrich.achieved.model.Goal;
 
 /**
  * Created by Matt on 2016-01-27.

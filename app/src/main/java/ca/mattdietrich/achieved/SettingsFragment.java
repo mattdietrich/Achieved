@@ -1,4 +1,4 @@
-package ca.mdietr.achieved;
+package ca.mattdietrich.achieved;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +18,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.Calendar;
-import java.util.Date;
 
-import ca.mdietr.achieved.notification.NotificationIntentService;
+import ca.mattdietrich.achieved.notification.NotificationIntentService;
 
 
 /**

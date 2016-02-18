@@ -1,4 +1,4 @@
-package ca.mdietr.achieved.model;
+package ca.mattdietrich.achieved.model;
 
 import java.util.Date;
 

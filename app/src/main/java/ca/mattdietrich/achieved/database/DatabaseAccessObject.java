@@ -1,4 +1,4 @@
-package ca.mdietr.achieved.database;
+package ca.mattdietrich.achieved.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.Date;
 
-import ca.mdietr.achieved.model.Goal;
-import ca.mdietr.achieved.model.Reminder;
+import ca.mattdietrich.achieved.model.Goal;
+import ca.mattdietrich.achieved.model.Reminder;
 
 /**
  * Created by Matt on 2015-09-01.

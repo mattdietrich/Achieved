@@ -1,4 +1,4 @@
-package ca.mdietr.achieved;
+package ca.mattdietrich.achieved;
 
 import android.content.Intent;
 import android.os.Bundle;

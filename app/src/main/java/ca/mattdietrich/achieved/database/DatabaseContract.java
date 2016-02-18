@@ -1,4 +1,4 @@
-package ca.mdietr.achieved.database;
+package ca.mattdietrich.achieved.database;
 
 import android.provider.BaseColumns;
 

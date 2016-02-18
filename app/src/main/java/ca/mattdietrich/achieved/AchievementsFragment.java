@@ -1,4 +1,4 @@
-package ca.mdietr.achieved;
+package ca.mattdietrich.achieved;
 
 import android.app.Activity;
 import android.database.Cursor;
@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import ca.mdietr.achieved.achievements.AchievementsCursorAdapter;
-import ca.mdietr.achieved.database.DatabaseAccessObject;
+import ca.mattdietrich.achieved.achievements.AchievementsCursorAdapter;
+import ca.mattdietrich.achieved.database.DatabaseAccessObject;
 
 
 /**

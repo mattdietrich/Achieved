@@ -1,4 +1,4 @@
-package ca.mdietr.achieved;
+package ca.mattdietrich.achieved;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -28,10 +27,10 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Date;
 
-import ca.mdietr.achieved.database.DatabaseAccessObject;
-import ca.mdietr.achieved.model.Goal;
-import ca.mdietr.achieved.model.Reminder;
-import ca.mdietr.achieved.notification.NotificationIntentService;
+import ca.mattdietrich.achieved.database.DatabaseAccessObject;
+import ca.mattdietrich.achieved.model.Goal;
+import ca.mattdietrich.achieved.model.Reminder;
+import ca.mattdietrich.achieved.notification.NotificationIntentService;
 
 
 /**
