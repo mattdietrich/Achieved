@@ -3,9 +3,9 @@
 Simple Android database app for setting a new goal every day.
 Includes a simple SQLiteDatabase and a couple Notifications.
 
-<a href="https://play.google.com/store/apps/details?id=ca.mattdietrich.achieved&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge-border.png" width="200"/></a>
-
 Achieved helps you accomplish a new goal every day. What will you achieve today?
+
+<a href="https://play.google.com/store/apps/details?id=ca.mattdietrich.achieved&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge-border.png" width="200"/></a>
 
 <img src="https://github.com/mattdietrich/Achieved/blob/master/screenshots/today_goal_achieved.png?raw=true" alt="Goal Achieved Screenshot" width="250">
 
